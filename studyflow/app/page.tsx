@@ -14,18 +14,7 @@ import { LogOut, GraduationCap, MessageCircle } from "lucide-react";
 
 function Dashboard() {
   const { user, logout } = useAuth();
-  const {
-    tasks,
-    allTasks,
-    filter,
-    setFilter,
-    addTask,
-    deleteTask,
-    toggleTask,
-    stats,
-    isLoaded,
-    setTasks,
-  } = useTasks();
+  const { tasks, allTasks, filter, setFilter, addTask, deleteTask, toggleTask, stats, isLoaded, setTasks } = useTasks();
 
   useEffect(() => {
     if (user && isLoaded) {
@@ -35,17 +24,13 @@ function Dashboard() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.matricula, isLoaded]);
 
-  const whatsappText = encodeURIComponent(
-    `Olá! Estou usando o StudyFlow e gostaria de falar sobre minhas tarefas de estudo.`
-  );
-  const whatsappLink = `https://wa.me/?text=${whatsappText}`;
+  const whatsappLink = `https://wa.me/?text=${encodeURIComponent("Olá! Estou usando o StudyFlow e gostaria de falar sobre minhas tarefas de estudo.")}`;
 
   return (
     <div className="min-h-screen bg-[var(--background)] flex flex-col justify-center items-center p-4 sm:p-8">
       <div className="w-full max-w-4xl bg-[#f8fafc] dark:bg-[#0a0a0a] shadow-2xl rounded-3xl overflow-hidden border border-[var(--card-border)] ring-1 ring-black/5">
-        
+
         <Header
-          className="mb-0 pb-2 bg-white dark:bg-[#121212] px-6 pt-6" 
           rightSlot={
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center gap-3 px-4 py-2 rounded-xl border border-[var(--card-border)] bg-gray-50 dark:bg-[#1a1a1a]">
@@ -57,11 +42,7 @@ function Dashboard() {
                   <p className="text-xs text-[var(--muted)] leading-none mt-1">Mat. {user?.matricula}</p>
                 </div>
               </div>
-              <button
-                onClick={logout}
-                title="Sair"
-                className="w-10 h-10 rounded-xl border border-[var(--card-border)] bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center text-[var(--muted)] hover:text-red-500 hover:border-red-300 transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm"
-              >
+              <button onClick={logout} title="Sair" className="w-10 h-10 rounded-xl border border-[var(--card-border)] bg-gray-50 dark:bg-[#1a1a1a] flex items-center justify-center text-[var(--muted)] hover:text-red-500 hover:border-red-300 transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm">
                 <LogOut size={20} />
               </button>
             </div>
@@ -78,14 +59,7 @@ function Dashboard() {
                 {user?.curso} · {user?.periodo}º período
               </p>
             </div>
-
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-3 bg-[#25D366] hover:bg-[#1EBE57] text-white text-sm font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-              title="Suporte via WhatsApp"
-            >
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-3 bg-[#25D366] hover:bg-[#1EBE57] text-white text-sm font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
               <MessageCircle size={20} />
               <span className="hidden sm:inline">Ajuda</span>
             </a>
@@ -96,36 +70,26 @@ function Dashboard() {
               <h3 className="text-sm font-semibold text-[var(--muted)] mb-4 uppercase tracking-wider">Seu Progresso</h3>
               <ProgressBar stats={stats} />
             </div>
-
             <div className="animate-fade-in-up delay-100 bg-white dark:bg-[#121212] p-6 rounded-2xl border border-[var(--card-border)] shadow-sm">
               <h3 className="text-sm font-semibold text-[var(--muted)] mb-4 uppercase tracking-wider">Nova Tarefa</h3>
               <TaskForm onAdd={addTask} />
             </div>
           </div>
 
-          {/* Container de tarefas com padding aumentado (p-8) para maior robustez */}
           <div className="animate-fade-in-up delay-150 bg-white dark:bg-[#121212] p-8 rounded-2xl border border-[var(--card-border)] shadow-sm min-h-[400px] flex flex-col">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
               <h3 className="text-lg font-bold text-[var(--foreground)]">Suas Tarefas</h3>
               <FilterButtons filter={filter} onFilter={setFilter} stats={stats} />
             </div>
-            
             <div className="flex-1">
-              <TaskList
-                tasks={tasks}
-                filter={filter}
-                isLoaded={isLoaded}
-                onToggle={toggleTask}
-                onDelete={deleteTask}
-              />
+              <TaskList tasks={tasks} filter={filter} isLoaded={isLoaded} onToggle={toggleTask} onDelete={deleteTask} />
             </div>
           </div>
         </main>
 
         <footer className="text-center pt-6 pb-8 bg-white dark:bg-[#121212] border-t border-[var(--card-border)]">
           <p className="text-xs font-medium text-[var(--muted)]">
-            StudyFlow · ODS 4 Educação de Qualidade · {allTasks.length} tarefa
-            {allTasks.length !== 1 ? "s" : ""} no total
+            StudyFlow · ODS 4 Educação de Qualidade · {allTasks.length} tarefa{allTasks.length !== 1 ? "s" : ""} no total
           </p>
         </footer>
       </div>
