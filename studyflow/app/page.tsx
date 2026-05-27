@@ -99,5 +99,6 @@ function Dashboard() {
 
 export default function Home() {
   const { user } = useAuth();
+  //oiii
   return user ? <Dashboard /> : <LoginPage />;
 }
